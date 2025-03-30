@@ -12,6 +12,8 @@
 
 - Dotenv
 
+- Clodinary
+
 ## Schemas
 
 #### 🏗 User Schema Details
@@ -32,20 +34,32 @@
 
 #### Auth Routes
 
-- Signup
+- Signup (POST)
 
 ```
  http://localhost:5001/api/auth/signup
 ```
 
-- Login
+- Login (POST)
 
 ```
  http://localhost:5001/api/auth/login
 ```
 
-- Logout
+- Logout (POST)
 
 ```
  http://localhost:5001/api/auth/logout
+```
+
+- Update Profile Picture (PUT)
+
+```
+ http://localhost:5001/api/auth/update-prifile
+```
+
+- Get User (GET)
+
+```
+ http://localhost:5001/api/auth/check
 ```
