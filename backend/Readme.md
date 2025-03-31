@@ -24,11 +24,23 @@
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   profilePic: { type: String, default: "" },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date }
 }
 ```
 
 #### 🏗 Messages Schema Details
+
+```
+{
+  senderId: {  type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, },
+  receiverId: {  type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, },
+  text: {type: String},
+  image: {type: String},
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date }
+}
+```
 
 ## Routes
 
@@ -62,4 +74,24 @@
 
 ```
  http://localhost:5001/api/auth/check
+```
+
+#### Messages Routes
+
+- Get Users (GET)
+
+```
+ http://localhost:5001/api/message/users
+```
+
+- Get Messages (GET)
+
+```
+ http://localhost:5001/api/message/:id
+```
+
+- Send Messages (POST)
+
+```
+ http://localhost:5001/api/message/send/:id
 ```
