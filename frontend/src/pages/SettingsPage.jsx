@@ -34,6 +34,7 @@ const SettingsPage = () => {
               `}
               onClick={() => setTheme(t)}
             >
+              {/* Displaing colors of the theames */}
               <div
                 className="relative h-8 w-full rounded-md overflow-hidden"
                 data-theme={t}
