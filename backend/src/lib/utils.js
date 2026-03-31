@@ -9,11 +9,11 @@ export const generateToken = (userId, res) => {
   });
   // set into users cookie
   res.cookie("jwt", token, {
-    maxAge: 7 * 24 * 60 * 60 * 1000, // Expires time in milisecounds
-    httpOnly: true, // not accessable to js
-    sameSite: "strict",
-    secure: process.env.NODE_ENV !== "development", // in devploment http works other wise hhtps will be nacessary
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    sameSite: "lax",
+    secure: false,
   });
-  // return token
+
   return token;
 };
