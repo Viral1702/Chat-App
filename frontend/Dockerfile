@@ -1,4 +1,4 @@
-# stage 1
+# Stage 1
 FROM node:20-alpine AS client-builder
 
 WORKDIR /app
@@ -11,13 +11,15 @@ COPY . .
 
 RUN npm run build
 
-# stage 2
-FROM nginx:alpine
+# Stage 2
+FROM node:20-alpine
 
-# Copy your build files straight into Nginx's default public folder
-COPY --from=client-builder /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-# Nginx runs on port 80 by default
-EXPOSE 80
+COPY --from=client-builder /app/dist ./dist
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN npm install -g serve
+
+EXPOSE 3000
+
+CMD ["serve", "-s", "dist", "-l", "3000"]
