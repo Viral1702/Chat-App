@@ -4,7 +4,46 @@ pipeline {
     stages {
         stage('Pulling') {
             steps {
-                git url: "https://github.com/Viral1702/Chat-App.git",branch:"main"
+                git url: "https://github.com/Viral1702/Chat-App.git", branch: "main"
+            }
+        }
+        
+        stage('Building frontend image'){
+            steps {
+                sh "docker build -t chat-app-frontend:latest ./frontend"
+            }
+        }
+        
+        stage('Building backend image'){
+            steps {
+                sh "docker build -t chat-app-backend:latest ./backend"
+            }
+        }
+        
+        stage('Pushing both images in the dockerhub'){
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: "dockerhubId",
+                    usernameVariable: 'DOCKER_USERNAME',
+                    passwordVariable: 'DOCKER_PASSWORD'
+                )]) {
+                    sh """
+                    docker tag chat-app-frontend:latest \$DOCKER_USERNAME/chat-app-frontend:latest
+                    
+                    docker tag chat-app-backend:latest \$DOCKER_USERNAME/chat-app-backend:latest
+                    
+                    echo "\$DOCKER_PASSWORD" | docker login -u "\$DOCKER_USERNAME" --password-stdin
+                    
+                    docker push \$DOCKER_USERNAME/chat-app-frontend:latest
+                    docker push \$DOCKER_USERNAME/chat-app-backend:latest
+                    """
+                }
+            }
+        }
+        
+        stage('Deploy'){
+            steps {
+                sh "docker compose up -d"
             }
         }
     }

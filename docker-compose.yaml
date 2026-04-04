@@ -30,7 +30,7 @@ services:
       - mongo-db
 
   backend:
-    build: ./backend/
+    image: viral17022005/chat-app-backend:latest
     container_name: backend-app
     restart: always
     env_file:
@@ -44,7 +44,7 @@ services:
       - "5000:5000"
 
   frontend:
-    build: ./frontend/
+    image: viral17022005/chat-app-frontend:latest
     container_name: frontend-app
     restart: always
     env_file:
