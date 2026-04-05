@@ -8,10 +8,20 @@ pipeline {
             }
         }
 
-        stage('Copy env files') {
+        stage('Inject env files') {
             steps {
-                 sh "cat /home/ubuntu/Chat-App/frontend/.env > ./frontend/.env"
-                 sh "cat /home/ubuntu/Chat-App/backend/.env > ./backend/.env"
+                withCredentials([
+                    file(credentialsId: 'chat-app-frontend-env', variable: 'FRONTEND_ENV'),
+                    file(credentialsId: 'chat-app-backend-env', variable: 'BACKEND_ENV')
+                ]) {
+                    sh """
+                    cp \$FRONTEND_ENV ./frontend/.env
+                    cp \$BACKEND_ENV ./backend/.env
+                    
+                    # Verify they are there (Optional, but good for debugging)
+                    ls -la ./frontend/.env ./backend/.env
+                    """
+                }
             }
         }
 
