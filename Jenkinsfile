@@ -7,11 +7,11 @@ pipeline {
                 git url: "https://github.com/Viral1702/Chat-App.git", branch: "main"
             }
         }
-        
+
         stage('Copy env files') {
             steps {
-                sh "cp /home/ubuntu/Chat-App/frontend/.env ./frontend/.env"
-                sh "cp /home/ubuntu/Chat-App/backend/.env ./backend/.env"
+                sh "sudo cp /home/ubuntu/Chat-App/frontend/.env ./frontend/.env"
+                sh "sudo cp /home/ubuntu/Chat-App/backend/.env ./backend/.env"
             }
         }
 
