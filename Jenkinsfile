@@ -8,6 +8,13 @@ pipeline {
             }
         }
         
+        stage('Copy env files') {
+            steps {
+                sh "cp /home/ubuntu/Chat-App/frontend/.env ./frontend/.env"
+                sh "cp /home/ubuntu/Chat-App/backend/.env ./backend/.env"
+            }
+        }
+
         stage('Building frontend image'){
             steps {
                 sh "docker build -t chat-app-frontend:latest ./frontend"
