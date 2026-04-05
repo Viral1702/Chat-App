@@ -15,10 +15,10 @@ pipeline {
                     file(credentialsId: 'chat-app-backend-env', variable: 'BACKEND_ENV')
                 ]) {
                     sh """
+                    chmod +w ./frontend ./backend || true
+                    rm -f ./frontend/.env ./backend/.env
                     cp \$FRONTEND_ENV ./frontend/.env
                     cp \$BACKEND_ENV ./backend/.env
-                    
-                    # Verify they are there (Optional, but good for debugging)
                     ls -la ./frontend/.env ./backend/.env
                     """
                 }
