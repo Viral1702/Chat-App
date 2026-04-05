@@ -41,9 +41,20 @@ pipeline {
             }
         }
         
-        stage('Deploy'){
+        stage('Deploy') {
             steps {
-                sh "docker compose up -d"
+                withCredentials([usernamePassword(
+                credentialsId: "dockerhubId",
+                usernameVariable: 'DOCKER_USERNAME',
+                passwordVariable: 'DOCKER_PASSWORD'
+                )]) {
+                    sh """
+                    echo "\$DOCKER_PASSWORD" | docker login -u "\$DOCKER_USERNAME" --password-stdin
+                    docker compose pull frontend backend
+                    docker compose up -d --no-deps --force-recreate frontend
+                    docker compose up -d --no-deps --force-recreate backend
+                    """
+                }
             }
         }
     }
