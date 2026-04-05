@@ -10,8 +10,8 @@ pipeline {
 
         stage('Copy env files') {
             steps {
-                sh "sudo cp /home/ubuntu/Chat-App/frontend/.env ./frontend/.env"
-                sh "sudo cp /home/ubuntu/Chat-App/backend/.env ./backend/.env"
+                 sh "cat /home/ubuntu/Chat-App/frontend/.env > ./frontend/.env"
+                 sh "cat /home/ubuntu/Chat-App/backend/.env > ./backend/.env"
             }
         }
 
